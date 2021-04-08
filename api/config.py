@@ -8,17 +8,16 @@ class DevelopmentConfig(object):
 
     SECRET_KEY = "akjwerht9834hgpaofjgn38rn"
 
-    MYSQL_USER = "root"
-    MYSQL_PASSWORD = "password"
-    MYSQL_DATABASE = "companydb"
-
     # UPLOADS = "/home/username/app/app/static/images/uploads"
 
     SESSION_COOKIE_SECURE = False
 
     MONGODB_SETTINGS = {
-        'host': 'mongodb://localhost/users'
+        'host': 'mongodb://mongodb/flask_db'
     }
+
+    MONGODB_USERNAME = "root"
+    MONGODB_PASSWORD = "password"
 
     JWT_SECRET_KEY = 't1NP63m4wnBg6nyHYKfmc2TpCOGI4nss'
 
