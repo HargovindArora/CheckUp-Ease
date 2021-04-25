@@ -3,6 +3,8 @@ import numpy as np
 from flask import request, Response, make_response, jsonify
 from flask_restful import Resource
 
+from ..database.models import Prediction, User
+
 from ..models.load_models import HEART_DISEASE_MODEL
 from ..models.load_models import DIABETES_PREDICTION_MODEL
 
@@ -24,6 +26,10 @@ class HeartDiseasePrediction(Resource):
     def post(self):
 
         req = request.get_json()
+
+        model = Prediction(**req)
+        model.prediction_type = "Heart Disease Prediction"
+
         # age = values["age"]
         # sex = values["sex"]
         # chest_pain = values["chest_pain"]
@@ -32,9 +38,18 @@ class HeartDiseasePrediction(Resource):
         # depression_by_exercise = values["depression_by_exercise"]
         # number_of_major_vessels = values["number_of_major_vessels"]
         # thal = values["thal"]
+        
         values = np.fromiter(req.values(), dtype=float)
         prediction = HEART_DISEASE_MODEL.predict([values])
         prediction = json.dumps(prediction, cls=NumpyEncoder)
+
+        if int(prediction[1]):
+            pred = "True"
+        else:
+            pred = "False"
+
+        model.prediction = pred
+        model.save()
 
         res = make_response(jsonify({"Prediction": prediction}), 200)
 
@@ -47,9 +62,20 @@ class DiabetesPrediction(Resource):
 
         req = request.get_json()
 
+        model = Prediction(**req)
+        model.prediction_type = "Diabetes Prediction"
+
         values = np.fromiter(req.values(), dtype=float)
         prediction = DIABETES_PREDICTION_MODEL.predict([values])
         prediction = json.dumps(prediction, cls=NumpyEncoder)
+
+        if int(prediction[1]):
+            pred = "True"
+        else:
+            pred = "False"
+
+        model.prediction = pred
+        model.save()
 
         res = make_response(jsonify({"Prediction": prediction}), 200)
 

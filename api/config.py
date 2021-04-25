@@ -13,11 +13,15 @@ class DevelopmentConfig(object):
     SESSION_COOKIE_SECURE = False
 
     MONGODB_SETTINGS = {
-        'host': 'mongodb://mongodb/flask_db'
+        'host': 'mongodb://localhost/checkup_ease'
     }
 
-    MONGODB_USERNAME = "root"
-    MONGODB_PASSWORD = "password"
+    # MONGODB_SETTINGS = {
+    #     'host': 'mongodb://mongodb/flask_db'
+    # }
+
+    # MONGODB_USERNAME = "root"
+    # MONGODB_PASSWORD = "password"
 
     JWT_SECRET_KEY = 't1NP63m4wnBg6nyHYKfmc2TpCOGI4nss'
 
