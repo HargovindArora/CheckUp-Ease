@@ -1,24 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
-import React, {useEffect, useState} from 'react'
-
-function App() {
-  const [msg, setMsg] = useState(0);
-
-  useEffect(() => {
-    fetch('/api/hello').then(res => res.json()).then(data => {
-      setMsg(data.message);
-    });
-  }, []);
+import React, { Component } from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
 
-  return (
-    <div className="App">
-      <header className="App-header">
-       <p> The Message is {msg} </p>
-      </header>
-    </div>
-  );
+import {Heart} from './components/Heart'
+import {Dashboard} from './Dashboard'
+
+
+class App extends Component {
+
+  render() {
+    return (
+        <Router>
+          <div>
+        <Route path="/" exact render={
+            ()=>{
+                return ( <Dashboard /> )
+            }
+        }/>
+        <Route path="/heart" exact render={
+            ()=>{
+                return ( <Heart /> )
+            }
+        }/>
+        </div>
+        </Router>
+    )
+  }
 }
 
-export default App;
+export default App
