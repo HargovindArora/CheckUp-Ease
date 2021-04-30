@@ -1,39 +1,35 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import '../index.css'
-import Axios from 'axios'
+
 import { Button, Modal } from 'react-bootstrap'
 import axios from 'axios'
 
 export const Heart = () => {
     const [show, setShow] = useState(false);
-    const [age1, setAge] = useState(0)
-    const [sex1, setSex] = useState(0)
-    const [cp, setCp] = useState(0)
-    const [heartRate,setHeartRate]=useState(0)
-    const [exerAng,setExerAng]=useState(0)
-    const [depExer,setDepExer]=useState(0)
-    const [vessels,setNumberOfVessels]=useState(0)
-    const [thal1,setThal]=useState(0)
+    const [age1, setAge] = useState("")
+    const [sex1, setSex] = useState("")
+    const [cp, setCp] = useState("")
+    const [heartRate,setHeartRate]=useState("")
+    const [exerAng,setExerAng]=useState("")
+    const [depExer,setDepExer]=useState("")
+    const [vessels,setNumberOfVessels]=useState("")
+    const [thal1,setThal]=useState("")
    
     const handleShow = (e) => {
         console.log(age1)
-        Axios({
-            method: 'post',
-            url: '/api/predict_heart',
-            data: {
-               age: age1,
-               sex: sex1,
-               chest_pain: cp,
-               max_heart_rate: heartRate,
-               exercise_angina: exerAng,
-               depression_by_exercise: depExer,
-               number_of_vessels: vessels,
-               thal: thal1
-            }
-          }).then((response) => {
+        axios.post('/api/predict_heart',{
+               age: parseFloat(age1),
+               sex: parseFloat(sex1),
+               chest_pain: parseFloat(cp),
+               max_heart_rate: parseFloat(heartRate),
+               exercise_angina: parseFloat(exerAng),
+               depression_by_exercise: parseFloat(depExer),
+               number_of_vessels: parseFloat(vessels),
+               thal: parseFloat(thal1)
+          }).then(response => {
             console.log(response);
-          }, (e) => {
+          }).catch(e => {
               console.log(e)
           });
           e.preventDefault();
