@@ -8,6 +8,7 @@ class Prediction(db.DynamicDocument):
     prediction_type = db.StringField(required=True)
     prediction = db.StringField(required=True)
     date_created = db.DateTimeField(default=datetime.utcnow)
+    image = db.ImageField(required=False)
 
     meta = {
         "indexes": ["date_created"],
