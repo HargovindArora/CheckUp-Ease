@@ -5,28 +5,34 @@ import '../index.css'
 import { Button, Modal } from 'react-bootstrap'
 import axios from 'axios'
 
-export const Heart = () => {
+export const Diabetes = () => {
+
     const [show, setShow] = useState(false);
     const [age1, setAge] = useState("")
-    const [sex1, setSex] = useState("")
-    const [cp, setCp] = useState("")
-    const [heartRate,setHeartRate]=useState("")
-    const [exerAng,setExerAng]=useState("")
-    const [depExer,setDepExer]=useState("")
-    const [vessels,setNumberOfVessels]=useState("")
-    const [thal1,setThal]=useState("")
-   
+    const [gender, setGender] = useState("")
+    const [polyuria, setPolyuria] = useState("")
+    const [polydipsia,setPolydipsia]=useState("")
+    const [weight,setWeight]=useState("")
+    const [poly,setPoly]=useState("")
+    const [irritability,setIrritability]=useState("")
+    const [paresis,setParesis]=useState("")
+    const [alopecia,setAlopecia]=useState("")
+    const [polyphagia,setPolyphagia]=useState("")
+    const [visual,setVisualblurring]=useState("")
+
     const handleShow = (e) => {
         console.log(age1)
-        axios.post('/api/predict_heart',{
-               age: parseFloat(age1),
-               sex: parseFloat(sex1),
-               chest_pain: parseFloat(cp),
-               max_heart_rate: parseFloat(heartRate),
-               exercise_angina: parseFloat(exerAng),
-               depression_by_exercise: parseFloat(depExer),
-               number_of_vessels: parseFloat(vessels),
-               thal: parseFloat(thal1)
+        axios.post('/api/predict_diabetes',{
+               Age: age1,
+               Gender: parseInt(gender),
+               Polyuria: parseInt(polyuria),
+               Polydipsia: parseInt(polydipsia),
+               sudden_weight_loss: parseInt(weight),
+               Polyphagia: parseInt(polyphagia),
+               visual_blurring: parseInt(visual),
+               Irritability: parseInt(irritability),
+               partial_paresis: parseInt(paresis),
+               Alopecia: parseInt(alopecia)
           }).then(response => {
             console.log(response);
           }).catch(e => {
@@ -73,24 +79,28 @@ export const Heart = () => {
                 </ul>
             </div>
             <div class="content">
-                <h1 className="hm" class="p-3 mb-2 bg-info text-white">Heart Disease Prediction</h1><br></br>
+                <h1 className="hm" class="p-3 mb-2 bg-info text-white">Diabetes Prediction</h1><br></br>
                 <form onSubmit={handleShow}>
                 <label> Age:</label><br></br>
-                <input type="number" onChange={setAge}></input><br></br><br></br>
-                <label>Sex:  </label><br></br>
-                <input type="number" onChange={setSex}></input><br></br><br></br>
-                <label>Chest Pain:  </label><br></br>
-                <input type="number" onChange={setCp}></input><br></br><br></br>
-                <label>Max Heart Rate:  </label><br></br>
-                <input type="number" onChange={setHeartRate}></input><br></br><br></br>
-                <label>Exercise angina:  </label><br></br>
-                <input type="number" onChange={setExerAng}></input><br></br><br></br>
-                <label>Depression by exercise:  </label><br></br>
-                <input type="number" onChange={setDepExer}></input><br></br><br></br>
-                <label>Number of vessels:  </label><br></br>
-                <input type="number" onChange={setNumberOfVessels}></input><br></br><br></br>
-                <label>Thal:  </label><br></br>
-                <input type="number" onChange={setThal}></input><br></br><br></br>
+                <input  type="value" onChange={(e) => {setAge(e.target.value)}}></input><br></br><br></br>
+                <label>Gender:  </label><br></br>
+                <input type="value" onChange={(e) => {setGender(e.target.value)}}></input><br></br><br></br>
+                <label>Polyuria:  </label><br></br>
+                <input type="value" onChange={(e) => {setPolyuria(e.target.value)}}></input><br></br><br></br>
+                <label>Polydipsia:  </label><br></br>
+                <input type="value" onChange={(e) => {setPolydipsia(e.target.value)}}></input><br></br><br></br>
+                <label>sudden_weight_loss:  </label><br></br>
+                <input type="value" onChange={(e) => {setWeight(e.target.value)}}></input><br></br><br></br>
+                <label>Polyphagia:  </label><br></br>
+                <input type="value" onChange={(e) => {setPolyphagia(e.target.value)}}></input><br></br><br></br>
+                <label>Visual blurring:  </label><br></br>
+                <input type="value" onChange={(e) => {setVisualblurring(e.target.value)}}></input><br></br><br></br>
+                <label>Irritability:  </label><br></br>
+                <input type="value" onChange={(e) => {setIrritability(e.target.value)}}></input><br></br><br></br>
+                <label>Partial paresis:  </label><br></br>
+                <input type="value" onChange={(e) => {setParesis(e.target.value)}}></input><br></br><br></br>
+                <label>Alopecia:  </label><br></br>
+                <input type="value" onChange={(e)=>{setAlopecia(e.target.value)}}></input><br></br><br></br>
                 <button type="submit" class="btn btn-success">Submit</button>
                </form>
             </div>

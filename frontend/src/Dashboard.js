@@ -34,7 +34,7 @@ export const Dashboard=()=> {
       <div class="card-body">
         <h5 class="card-title">Diabetes Prediction</h5>
         <p class="card-text">Model to predict Diabetes</p>
-        <a href="#" class="btn btn-primary">Go</a>
+        <Link to="/diabetes" class="btn btn-primary">Go</Link>
       </div>
     </div>
   </div>

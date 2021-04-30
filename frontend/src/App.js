@@ -8,6 +8,7 @@ import {
 
 
 import {Heart} from './components/Heart'
+import {Diabetes} from './components/Diabetes'
 import {Dashboard} from './Dashboard'
 
 
@@ -25,6 +26,11 @@ class App extends Component {
         <Route path="/heart" exact render={
             ()=>{
                 return ( <Heart /> )
+            }
+        }/>
+        <Route path="/diabetes" exact render={
+            ()=>{
+                return ( <Diabetes /> )
             }
         }/>
         </div>

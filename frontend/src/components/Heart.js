@@ -19,14 +19,14 @@ export const Heart = () => {
     const handleShow = (e) => {
         console.log(age1)
         axios.post('/api/predict_heart',{
-               age: parseFloat(age1),
-               sex: parseFloat(sex1),
-               chest_pain: parseFloat(cp),
-               max_heart_rate: parseFloat(heartRate),
-               exercise_angina: parseFloat(exerAng),
-               depression_by_exercise: parseFloat(depExer),
-               number_of_vessels: parseFloat(vessels),
-               thal: parseFloat(thal1)
+               age: parseInt(age1),
+               sex: parseInt(sex1),
+               chest_pain: parseInt(cp),
+               max_heart_rate: parseInt(heartRate),
+               exercise_angina: parseInt(exerAng),
+               depression_by_exercise: parseInt(depExer),
+               number_of_vessels: parseInt(vessels),
+               thal: parseInt(thal1)
           }).then(response => {
             console.log(response);
           }).catch(e => {
@@ -76,21 +76,21 @@ export const Heart = () => {
                 <h1 className="hm" class="p-3 mb-2 bg-info text-white">Heart Disease Prediction</h1><br></br>
                 <form onSubmit={handleShow}>
                 <label> Age:</label><br></br>
-                <input type="number" onChange={setAge}></input><br></br><br></br>
+                <input type="value" onChange={(e) => {setAge(e.target.value)}}></input><br></br><br></br>
                 <label>Sex:  </label><br></br>
-                <input type="number" onChange={setSex}></input><br></br><br></br>
+                <input type="value" onChange={(e) => {setSex(e.target.value)}}></input><br></br><br></br>
                 <label>Chest Pain:  </label><br></br>
-                <input type="number" onChange={setCp}></input><br></br><br></br>
+                <input type="value" onChange={(e) => {setCp(e.target.value)}}></input><br></br><br></br>
                 <label>Max Heart Rate:  </label><br></br>
-                <input type="number" onChange={setHeartRate}></input><br></br><br></br>
+                <input type="value" onChange={(e) => {setHeartRate(e.target.value)}}></input><br></br><br></br>
                 <label>Exercise angina:  </label><br></br>
-                <input type="number" onChange={setExerAng}></input><br></br><br></br>
+                <input type="value" onChange={(e) => {setExerAng(e.target.value)}}></input><br></br><br></br>
                 <label>Depression by exercise:  </label><br></br>
-                <input type="number" onChange={setDepExer}></input><br></br><br></br>
+                <input type="value" onChange={(e) => {setDepExer(e.target.value)}}></input><br></br><br></br>
                 <label>Number of vessels:  </label><br></br>
-                <input type="number" onChange={setNumberOfVessels}></input><br></br><br></br>
+                <input type="value" onChange={(e) => {setNumberOfVessels(e.target.value)}}></input><br></br><br></br>
                 <label>Thal:  </label><br></br>
-                <input type="number" onChange={setThal}></input><br></br><br></br>
+                <input type="value" onChange={(e) => {setThal(e.target.value)}}></input><br></br><br></br>
                 <button type="submit" class="btn btn-success">Submit</button>
                </form>
             </div>
