@@ -6,34 +6,38 @@ import { Button, Modal } from 'react-bootstrap'
 import axios from 'axios'
 
 export const Heart = () => {
-    const [show, setShow] = useState(false);
     const [age1, setAge] = useState("")
     const [sex1, setSex] = useState("")
     const [cp, setCp] = useState("")
-    const [heartRate,setHeartRate]=useState("")
-    const [exerAng,setExerAng]=useState("")
-    const [depExer,setDepExer]=useState("")
-    const [vessels,setNumberOfVessels]=useState("")
-    const [thal1,setThal]=useState("")
-   
-    const handleShow = (e) => {
+    const [heartRate, setHeartRate] = useState("")
+    const [exerAng, setExerAng] = useState("")
+    const [depExer, setDepExer] = useState("")
+    const [vessels, setNumberOfVessels] = useState("")
+    const [thal1, setThal] = useState("")
+    const [modalShow, setModalShow] = React.useState(false);
+    const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+    const handleSho = (e) => {
         console.log(age1)
-        axios.post('/api/predict_heart',{
-               age: parseInt(age1),
-               sex: parseInt(sex1),
-               chest_pain: parseInt(cp),
-               max_heart_rate: parseInt(heartRate),
-               exercise_angina: parseInt(exerAng),
-               depression_by_exercise: parseInt(depExer),
-               number_of_vessels: parseInt(vessels),
-               thal: parseInt(thal1)
-          }).then(response => {
+        axios.post('/api/predict_heart', {
+            age: parseInt(age1),
+            sex: parseInt(sex1),
+            chest_pain: parseInt(cp),
+            max_heart_rate: parseInt(heartRate),
+            exercise_angina: parseInt(exerAng),
+            depression_by_exercise: parseInt(depExer),
+            number_of_vessels: parseInt(vessels),
+            thal: parseInt(thal1)
+        }).then(response => {
             console.log(response);
-          }).catch(e => {
-              console.log(e)
-          });
-          e.preventDefault();
-        }
+        }).catch(e => {
+            console.log(e)
+        });
+        e.preventDefault();
+    }
     return (
         <div>
             <nav class="navbar navbar-inverse">
@@ -74,25 +78,25 @@ export const Heart = () => {
             </div>
             <div class="content">
                 <h1 className="hm" class="p-3 mb-2 bg-info text-white">Heart Disease Prediction</h1><br></br>
-                <form onSubmit={handleShow}>
-                <label> Age:</label><br></br>
-                <input type="value" onChange={(e) => {setAge(e.target.value)}}></input><br></br><br></br>
-                <label>Sex:  </label><br></br>
-                <input type="value" onChange={(e) => {setSex(e.target.value)}}></input><br></br><br></br>
-                <label>Chest Pain:  </label><br></br>
-                <input type="value" onChange={(e) => {setCp(e.target.value)}}></input><br></br><br></br>
-                <label>Max Heart Rate:  </label><br></br>
-                <input type="value" onChange={(e) => {setHeartRate(e.target.value)}}></input><br></br><br></br>
-                <label>Exercise angina:  </label><br></br>
-                <input type="value" onChange={(e) => {setExerAng(e.target.value)}}></input><br></br><br></br>
-                <label>Depression by exercise:  </label><br></br>
-                <input type="value" onChange={(e) => {setDepExer(e.target.value)}}></input><br></br><br></br>
-                <label>Number of vessels:  </label><br></br>
-                <input type="value" onChange={(e) => {setNumberOfVessels(e.target.value)}}></input><br></br><br></br>
-                <label>Thal:  </label><br></br>
-                <input type="value" onChange={(e) => {setThal(e.target.value)}}></input><br></br><br></br>
-                <button type="submit" class="btn btn-success">Submit</button>
-               </form>
+                <form onSubmit={handleSho}>
+                    <label> Age:</label><br></br>
+                    <input type="value" onChange={(e) => { setAge(e.target.value) }}></input><br></br><br></br>
+                    <label>Sex:  </label><br></br>
+                    <input type="value" onChange={(e) => { setSex(e.target.value) }}></input><br></br><br></br>
+                    <label>Chest Pain:  </label><br></br>
+                    <input type="value" onChange={(e) => { setCp(e.target.value) }}></input><br></br><br></br>
+                    <label>Max Heart Rate:  </label><br></br>
+                    <input type="value" onChange={(e) => { setHeartRate(e.target.value) }}></input><br></br><br></br>
+                    <label>Exercise angina:  </label><br></br>
+                    <input type="value" onChange={(e) => { setExerAng(e.target.value) }}></input><br></br><br></br>
+                    <label>Depression by exercise:  </label><br></br>
+                    <input type="value" onChange={(e) => { setDepExer(e.target.value) }}></input><br></br><br></br>
+                    <label>Number of vessels:  </label><br></br>
+                    <input type="value" onChange={(e) => { setNumberOfVessels(e.target.value) }}></input><br></br><br></br>
+                    <label>Thal:  </label><br></br>
+                    <input type="value" onChange={(e) => { setThal(e.target.value) }}></input><br></br><br></br>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </form>
             </div>
         </div>
     )
