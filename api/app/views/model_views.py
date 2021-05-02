@@ -6,6 +6,7 @@ from PIL import Image
 
 from flask import request, Response, make_response, jsonify
 from flask_restful import Resource
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 from ..database.models import Prediction, User
 
@@ -53,6 +54,7 @@ class NumpyEncoder(json.JSONEncoder):
 
 class HeartDiseasePrediction(Resource):
 
+    @jwt_required()
     def post(self):
 
         req = request.get_json()
@@ -72,6 +74,11 @@ class HeartDiseasePrediction(Resource):
         model.prediction = pred
         model.save()
 
+        user_id = get_jwt_identity()
+        user = User.objects.get(id=user_id)
+        user.update(push__predictions=model)
+        user.save()
+
         res = make_response(jsonify({"Prediction": prediction}), 200)
 
         return res
@@ -79,6 +86,7 @@ class HeartDiseasePrediction(Resource):
 
 class DiabetesPrediction(Resource):
 
+    @jwt_required()
     def post(self):
 
         req = request.get_json()
@@ -98,6 +106,11 @@ class DiabetesPrediction(Resource):
         model.prediction = pred
         model.save()
 
+        user_id = get_jwt_identity()
+        user = User.objects.get(id=user_id)
+        user.update(push__predictions=model)
+        user.save()
+
         res = make_response(jsonify({"Prediction": prediction}), 200)
 
         return res
@@ -105,6 +118,7 @@ class DiabetesPrediction(Resource):
 
 class CovidPrediction(Resource):
 
+    @jwt_required()
     def post(self):
 
         model = Prediction()
@@ -118,6 +132,11 @@ class CovidPrediction(Resource):
 
         model.prediction = prediction
         model.save()
+
+        user_id = get_jwt_identity()
+        user = User.objects.get(id=user_id)
+        user.update(push__predictions=model)
+        user.save()
 
         res = make_response(jsonify({"Prediction": prediction}), 200)
 
