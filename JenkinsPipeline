@@ -1,0 +1,50 @@
+pipeline {
+    
+    agent any
+    
+    stages {
+        stage('Clone Project') {
+            steps {
+                git 'https://github.com/HargovindArora/CheckUp-Ease'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'cd api/ && pip3 install -r requirements.txt'
+                sh 'cd frontend/ && npm install'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'cd api/ && python3 -m pytest'
+                sh 'cd frontend/ && npm test'
+            }
+        }
+        stage('Build Docker Images') {
+            steps {
+                sh 'docker build -f "api/Dockerfile" -t hargovind04/checkupEase_backend:latest .'
+                sh 'docker build -f "frontend/Dockerfile" -t hargovind04/checkupEase_frontend:latest .'
+                sh 'docker build -f "nginx/Dockerfile" -t hargovind04/checkupEase_nginx:latest .'
+            }
+        }
+        stage('Publish Docker Images') {
+            steps {
+                withDockerRegistry([ credentialsId: "DockerID", url: "" ]) {
+                    sh 'docker push hargovind04/checkupEase_backend:latest'
+                    sh 'docker push hargovind04/checkupEase_frontend:latest'
+                    sh 'docker push hargovind04/checkupEase_nginx:latest'
+                }
+            }
+        }
+        stage('Clean Docker Images') {
+            steps {
+                sh 'docker rmi -f $(docker images -a -q)'
+            }
+        }
+        stage('Deploy and Run Image on Remote Server'){
+            steps {
+                ansiblePlaybook becomeUser: null, colorized: true, disableHostKeyChecking: true, installation: 'Ansible', inventory: 'hosts', playbook: 'playbook.yml', sudoUser: null
+            }
+        }
+    }
+}
