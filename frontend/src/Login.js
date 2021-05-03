@@ -53,7 +53,6 @@ export const Login=(props)=> {
       console.log("You pressed signup")
       let optss = {
         'name': name,
-        'age': age,
         'username': susername,
         'password': spassword
       }

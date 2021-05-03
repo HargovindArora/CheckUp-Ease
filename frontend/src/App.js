@@ -12,6 +12,7 @@ import {Diabetes} from './components/Diabetes'
 import {Covid} from './components/Covid'
 import {Login} from './Login'
 import {Dashboard} from './Dashboard'
+import {Profile} from './user/Profile'
 
 
 class App extends Component {
@@ -43,6 +44,11 @@ class App extends Component {
         <Route path="/covid" exact render={
             ()=>{
                 return ( <Covid /> )
+            }
+        }/>
+        <Route path="/profile" exact render={
+            ()=>{
+                return ( <Profile /> )
             }
         }/>
         </div>

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom'
+import { Link,useHistory } from 'react-router-dom'
+import Axios from 'axios'
+
 
 export const Covid =()=> {
 const [image, setImage]=useState(0)
@@ -9,6 +11,20 @@ const [image, setImage]=useState(0)
  const handleImageChange = (e) => {
     setImage(e.target.files[0])
   };
+  const history=useHistory();
+  const handler=(e)=>{
+      Axios({
+          method: 'post',
+          url: '/api/logout',
+          headers: { Authorization: `Bearer ${window.localStorage.getItem('key')}` }
+        }).then((response) => {
+          console.log(response);
+          history.push("/")
+        }, (error) => {
+          console.log(error);
+        });
+        e.preventDefault()
+  }
 
   const handleSubmit = (e) => {
 
@@ -34,10 +50,17 @@ const [image, setImage]=useState(0)
                         <a class="navbar-brand" href="#">CheckUpEase</a>
                     </div>
                     <ul class="nav navbar-nav">
-                        <li class="active"><Link to="/">Home</Link></li>
+                        <li class="active"><Link to="/dashboard">Home</Link></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                        <li>
+                    <Link to="/profile" class="nav-link d-sm-flex align-items-sm-center" href="#">
+                   <strong class="d-none d-sm-block ms-1">Profile</strong>
+                     </Link>
+                     </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a onClick={handler}><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
                     </ul>
                 </div>
             </nav>

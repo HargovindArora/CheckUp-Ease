@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link,useHistory } from 'react-router-dom'
 import '../index.css'
 
 import { Button, Modal } from 'react-bootstrap'
 import axios from 'axios'
 
 export const Heart = () => {
+
     const [age1, setAge] = useState("")
     const [sex1, setSex] = useState("")
     const [cp, setCp] = useState("")
@@ -16,6 +17,23 @@ export const Heart = () => {
     const [thal1, setThal] = useState("")
     const [modalShow, setModalShow] = React.useState(false);
     const [show, setShow] = useState(false);
+
+    const history=useHistory();
+
+    const handler=(e)=>{
+        axios({
+            method: 'post',
+            url: '/api/logout',
+            headers: { Authorization: `Bearer ${window.localStorage.getItem('key')}` }
+          }).then((response) => {
+            console.log(response);
+            history.push("/")
+          }, (error) => {
+            console.log(error);
+          });
+          e.preventDefault()
+    }
+
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -46,10 +64,10 @@ export const Heart = () => {
                         <a class="navbar-brand" href="#">CheckUpEase</a>
                     </div>
                     <ul class="nav navbar-nav">
-                        <li class="active"><Link to="/">Home</Link></li>
+                        <li class="active"><Link to="/dashboard">Home</Link></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                        <li><a onClick={handler}><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
                     </ul>
                 </div>
             </nav>
