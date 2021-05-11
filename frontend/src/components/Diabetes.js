@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link,useHistory } from 'react-router-dom'
 import '../index.css'
-
+import { Alert, AlertTitle } from '@material-ui/lab';
 import { Button, Modal } from 'react-bootstrap'
 import axios from 'axios'
 
@@ -19,6 +19,7 @@ export const Diabetes = () => {
     const [alopecia,setAlopecia]=useState("")
     const [polyphagia,setPolyphagia]=useState("")
     const [visual,setVisualblurring]=useState("")
+    const [prediction,setPrediction]=useState(3)
 
     const history=useHistory();
     const handler=(e)=>{
@@ -48,8 +49,11 @@ export const Diabetes = () => {
                Irritability: parseInt(irritability),
                partial_paresis: parseInt(paresis),
                Alopecia: parseInt(alopecia)
+          },{
+              headers: { Authorization: `Bearer ${window.localStorage.getItem('key')}` }
           }).then(response => {
             console.log(response);
+            setPrediction(response.data.Prediction.[1])
           }).catch(e => {
               console.log(e)
           });
@@ -67,6 +71,13 @@ export const Diabetes = () => {
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a onClick={handler}><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                    <Link to="/profile" class="nav-link d-sm-flex align-items-sm-center" href="#">
+                   <strong class="d-none d-sm-block ms-1">Profile</strong>
+                     </Link>
+                     </li>
                     </ul>
                 </div>
             </nav>
@@ -117,7 +128,15 @@ export const Diabetes = () => {
                 <label>Alopecia:  </label><br></br>
                 <input type="value" onChange={(e)=>{setAlopecia(e.target.value)}}></input><br></br><br></br>
                 <button type="submit" class="btn btn-success">Submit</button>
-               </form>
+               </form><br></br>
+               <div className="Heart">{prediction == 1 ? <p>  <Alert severity="error">
+                    <AlertTitle>Get immediate checkup by doctor</AlertTitle>
+                    <strong>Diabetes</strong>
+                </Alert></p> : null}</div>
+                <div className="Normal">{prediction == 0 ? <p>  <Alert severity="success">
+                    <AlertTitle>No need to worry</AlertTitle>
+                    <strong>Normal</strong>
+                </Alert></p> : null}</div>
             </div>
         </div>
     )

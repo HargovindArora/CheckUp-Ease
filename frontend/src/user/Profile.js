@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React,{useEffect, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -7,7 +7,10 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 import Axios from 'axios'
+import {useHistory} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 const useStyles = makeStyles({
   table: {
@@ -15,18 +18,27 @@ const useStyles = makeStyles({
   },
 });
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-  ];
   
   export const Profile=()=> {
+      const [name,setName]=useState("")
+      const [predictions,setPredictions]=useState([])
+
+      const history=useHistory();
+
+      const handler=(e)=>{
+          Axios({
+              method: 'post',
+              url: '/api/logout',
+              headers: { Authorization: `Bearer ${window.localStorage.getItem('key')}` }
+            }).then((response) => {
+              console.log(response);
+              history.push("/")
+            }, (error) => {
+              console.log(error);
+            });
+            e.preventDefault()
+      }
+
       useEffect(() => {
         Axios({
             method: 'get',
@@ -34,38 +46,54 @@ const rows = [
             headers:{Authorization: `Bearer ${window.localStorage.getItem('key')}`},
           }).then((response) => {
             console.log(response);
+            setName(response.data.profile.name)
+            setPredictions(response.data.profile.predictions)
           }, (error) => {
             console.log(error);
           });
-      })
+      },[])
+      console.log(predictions)
+
     const classes = useStyles();
   
     return (
-      <TableContainer component={Paper}>
+        <div>
+            <nav class="navbar navbar-inverse">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">CheckUpEase</a>
+                    </div>
+                    <ul class="nav navbar-nav">
+                        <li class="active"><Link to="/dashboard">Home</Link></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a onClick={handler}><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                    </ul>
+                </div>
+            </nav>
+            <Typography variant="h1" component="h2">
+               {name}
+           </Typography>
+      <TableContainer component={Paper}  style={{ width: 800 }}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Dessert (100g serving)</TableCell>
-              <TableCell align="right">Calories</TableCell>
-              <TableCell align="right">Fat&nbsp;(g)</TableCell>
-              <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-              <TableCell align="right">Protein&nbsp;(g)</TableCell>
+              <TableCell>Prediction Type</TableCell>
+              <TableCell align="right">Prediction</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.name}>
+            {predictions.map((prediction) => (
+              <TableRow key={prediction.prediction_type}>
                 <TableCell component="th" scope="row">
-                  {row.name}
+                  {prediction.prediction_type}
                 </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
-                <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
+                <TableCell align="right">{prediction.prediction}</TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
+      </div>
     );
   }

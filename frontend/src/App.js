@@ -10,10 +10,11 @@ import {
 import {Heart} from './components/Heart'
 import {Diabetes} from './components/Diabetes'
 import {Covid} from './components/Covid'
-import {Login} from './Login'
+import {Login} from './user/Login'
+import {Signup} from './user/Signup'
 import {Dashboard} from './Dashboard'
 import {Profile} from './user/Profile'
-
+import  {Profiles} from './user/Profiles'
 
 class App extends Component {
 
@@ -24,6 +25,11 @@ class App extends Component {
           <Route path="/" exact render={
             ()=>{
                 return ( <Login /> )
+            }
+        }/>
+        <Route path="/signup" exact render={
+            ()=>{
+                return ( <Signup /> )
             }
         }/>
         <Route path="/dashboard" exact render={
@@ -48,7 +54,7 @@ class App extends Component {
         }/>
         <Route path="/profile" exact render={
             ()=>{
-                return ( <Profile /> )
+                return ( <Profiles /> )
             }
         }/>
         </div>
