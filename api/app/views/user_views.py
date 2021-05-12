@@ -1,6 +1,6 @@
 import datetime
 
-from ...app import app, logger
+from .. import logger
 
 from flask import request, Response, make_response, jsonify
 from flask_restful import Resource
@@ -19,7 +19,7 @@ class SignupApi(Resource):
         user.save()
         id = user.id
 
-        app.logger.info(f"New user created with id {id}")
+        logger.info(f"New user created with id {id}")
 
         res = make_response(jsonify({"msg": "User successfully created"}), 200)
 
@@ -36,14 +36,14 @@ class LoginApi(Resource):
 
         if not authorized:
             
-            app.logger.error(f"Incorrect username/password")
+            logger.error(f"Incorrect username/password")
 
             return {"msg": "Username or password is invalid"}, 401
 
         expires = datetime.timedelta(days=1)
         access_token = create_access_token(identity=str(user.id), expires_delta=expires)
 
-        app.logger.info(f"User logged in")
+        logger.info(f"User logged in")
 
         res = make_response(jsonify({"token": access_token}), 200)
 
@@ -59,7 +59,7 @@ class LogoutApi(Resource):
         revoked_token = TokenBlocklist(jti=jti)
         revoked_token.save()
 
-        app.logger.info(f"User logged out")
+        logger.info(f"User logged out")
 
         res = make_response(jsonify({"msg": "Successfully logged out"}), 200)
 
@@ -78,7 +78,7 @@ class UserProfileApi(Resource):
         result['name'] = user.name
         result['predictions'] = user.predictions
 
-        app.logger.info(f"User accessing their profile information and previous predictions")
+        logger.info(f"User accessing their profile information and previous predictions")
 
         res = make_response(jsonify({"profile": result}), 200)
 

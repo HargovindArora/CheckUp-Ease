@@ -8,9 +8,6 @@ from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
 
-from .routes.user_routes import initialize_user_routes
-from .routes.model_routes import initialize_model_routes
-
 from .database.db import initialize_db
 from .database.models import TokenBlocklist
 
@@ -25,6 +22,11 @@ if app.config["ENV"] == "production":
     app.config.from_object("config.ProductionConfig")
 else:
     app.config.from_object("config.DevelopmentConfig")
+
+
+from .routes.user_routes import initialize_user_routes
+from .routes.model_routes import initialize_model_routes
+
 
 api = Api(app)
 initialize_user_routes(api)

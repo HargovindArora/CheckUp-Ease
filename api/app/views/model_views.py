@@ -2,7 +2,7 @@ import io
 import json
 import numpy as np
 
-from ...app import app, logger
+from .. import logger
 
 from PIL import Image
 
@@ -29,7 +29,7 @@ def transform_image(image_bytes):
     ])
     image = Image.open(io.BytesIO(image_bytes)).convert('RGB')
 
-    app.logger.info("Uploaded image transformed")
+    logger.info("Uploaded image transformed")
 
     return my_transforms(image).unsqueeze(0)
 
@@ -72,10 +72,10 @@ class HeartDiseasePrediction(Resource):
 
         if int(prediction[1]):
             pred = "True"
-            app.logger.info("Heart Disease Found")
+            logger.info("Heart Disease Found")
         else:
             pred = "False"
-            app.logger.info("Heart Disease Not Found")
+            logger.info("Heart Disease Not Found")
 
 
         model.prediction = pred
@@ -86,7 +86,7 @@ class HeartDiseasePrediction(Resource):
         user.update(push__predictions=model)
         user.save()
 
-        app.logger.info("Heart disease prediction")
+        logger.info("Heart disease prediction")
 
         res = make_response(jsonify({"Prediction": prediction}), 200)
 
@@ -109,10 +109,10 @@ class DiabetesPrediction(Resource):
 
         if int(prediction[1]):
             pred = "True"
-            app.logger.info("Diabetes Found")
+            logger.info("Diabetes Found")
         else:
             pred = "False"
-            app.logger.info("Diabetes Not Found")
+            logger.info("Diabetes Not Found")
 
 
         model.prediction = pred
@@ -123,7 +123,7 @@ class DiabetesPrediction(Resource):
         user.update(push__predictions=model)
         user.save()
 
-        app.logger.info("Diabetes prediction")
+        logger.info("Diabetes prediction")
 
         res = make_response(jsonify({"Prediction": prediction}), 200)
 
@@ -152,7 +152,7 @@ class CovidPrediction(Resource):
         user.update(push__predictions=model)
         user.save()
 
-        app.logger.info("Covid-19 prediction")
+        logger.info("Covid-19 prediction")
 
         res = make_response(jsonify({"Prediction": prediction}), 200)
 
