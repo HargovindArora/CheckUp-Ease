@@ -1,14 +1,12 @@
 import os
 
 
-class DevelopmentConfig(object):
+class ProductionConfig(object):
 
-    DEBUG = True
+    DEBUG = False
     TESTING = False
 
     SECRET_KEY = "akjwerht9834hgpaofjgn38rn"
-
-    # UPLOADS = "/home/username/app/app/static/images/uploads"
 
     SESSION_COOKIE_SECURE = False
 
@@ -17,12 +15,24 @@ class DevelopmentConfig(object):
         'connect': False,
     }
 
-    # MONGODB_SETTINGS = {
-    #     'host': 'mongodb://mongodb/flask_db'
-    # }
+    JWT_SECRET_KEY = 't1NP63m4wnBg6nyHYKfmc2TpCOGI4nss'
 
-    # MONGODB_USERNAME = "root"
-    # MONGODB_PASSWORD = "password"
+    JWT_BLACKLIST_ENABLED = True
+
+
+class DevelopmentConfig(object):
+
+    DEBUG = True
+    TESTING = False
+
+    SECRET_KEY = "akjwerht9834hgpaofjgn38rn"
+
+    SESSION_COOKIE_SECURE = False
+
+    MONGODB_SETTINGS = {
+        'host': 'mongodb://localhost:27017/flaskdb',
+        'connect': False,
+    }
 
     JWT_SECRET_KEY = 't1NP63m4wnBg6nyHYKfmc2TpCOGI4nss'
 

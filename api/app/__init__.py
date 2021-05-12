@@ -1,3 +1,4 @@
+import os
 import logging
 import logging.config
 
@@ -20,7 +21,10 @@ app = Flask(__name__)
 logging.config.fileConfig(fname="logging.conf", disable_existing_loggers=False)
 logger = logging.getLogger(__name__)
 
-app.config.from_object("config.DevelopmentConfig")
+if app.config["ENV"] == "production":
+    app.config.from_object("config.ProductionConfig")
+else:
+    app.config.from_object("config.DevelopmentConfig")
 
 api = Api(app)
 initialize_user_routes(api)

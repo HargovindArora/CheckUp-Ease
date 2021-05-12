@@ -34,6 +34,7 @@
         restart_policy : always
         env: 
           APP_NAME: "app"
+          APP_ENV: "production"
           MONGODB_DATABASE: "flaskdb"
           MONGODB_HOSTNAME: "mongodb"
         links:
