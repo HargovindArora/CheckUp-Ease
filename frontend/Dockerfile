@@ -2,11 +2,11 @@ FROM node:14.16.0-stretch
 
 WORKDIR /node/app
 
-COPY package.json /node/app
+COPY frontend/package.json /node/app
 
 RUN npm install
 
-COPY . /node/app
+COPY frontend/ /node/app
 
 EXPOSE 3000
 

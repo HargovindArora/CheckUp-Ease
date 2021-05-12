@@ -1,0 +1,84 @@
+---
+- name: Create db container
+  hosts: all
+  remote_user: azureuser
+  docker_container:
+    name: mongodb
+    image: mongo:4.2.13-bionic
+    state: started
+    restart: yes
+    restart_policy : on-failure
+    exposed_ports:
+      - "27017"
+    env: 
+      MONGO_INITDB_DATABASE: "flaskdb"
+      MONGODB_DATA_DIR: /data/db
+    volumes:
+      - mongodbdata:/data/db
+
+- name: Pull and run flask image
+  hosts: all
+  remote_user: azureuser
+  tasks:
+    - name: Pull flask image
+      docker_image:
+        name: hargovind04/checkupEase_backend:latest
+        source: pull
+
+    - name: Running flask image
+      docker_container:
+        name: flask
+        image: hargovind04/checkupEase_backend:latest
+        state: started
+        restart: yes
+        restart_policy : always
+        env: 
+          APP_NAME: "app"
+          MONGODB_DATABASE: "flaskdb"
+          MONGODB_HOSTNAME: "mongodb"
+        links:
+          - "mongodb:mongodb"
+        exposed_ports:
+          - "8080"
+
+- name: Pull and run react image
+  hosts: all
+  remote_user: azureuser
+  tasks:
+    - name: Pull react image
+      docker_image:
+        name: hargovind04/checkupEase_frontend:latest
+        source: pull
+
+    - name: Running react image
+      docker_container:
+        name: react
+        image: hargovind04/checkupEase_frontend:latest
+        state: started
+        restart: yes
+        restart_policy : always
+        links: 
+          - "flask:flask"
+        exposed_ports:
+          - "3000"        
+
+- name: Pull and run nginx image
+  hosts: all
+  remote_user: azureuser
+  tasks:
+    - name: Pull nginx image
+      docker_image:
+        name: hargovind04/checkupEase_nginx:latest
+        source: pull
+
+    - name: Running nginx image
+      docker_container:
+        name: nginx
+        image: hargovind04/checkupEase_nginx:latest
+        state: started
+        restart: yes
+        restart_policy : always
+        links: 
+          - "react:react"
+        ports:
+          - "80:80"

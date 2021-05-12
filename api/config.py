@@ -1,4 +1,4 @@
-import json
+import os
 
 
 class DevelopmentConfig(object):
@@ -13,7 +13,8 @@ class DevelopmentConfig(object):
     SESSION_COOKIE_SECURE = False
 
     MONGODB_SETTINGS = {
-        'host': 'mongodb://localhost/checkup_ease'
+        'host': 'mongodb://' + os.environ['MONGODB_HOSTNAME'] + ':27017/' + os.environ['MONGODB_DATABASE'],
+        'connect': False,
     }
 
     # MONGODB_SETTINGS = {
