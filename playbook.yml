@@ -2,19 +2,21 @@
 - name: Create db container
   hosts: all
   remote_user: azureuser
-  docker_container:
-    name: mongodb
-    image: mongo:4.2.13-bionic
-    state: started
-    restart: yes
-    restart_policy : on-failure
-    exposed_ports:
-      - "27017"
-    env: 
-      MONGO_INITDB_DATABASE: "flaskdb"
-      MONGODB_DATA_DIR: /data/db
-    volumes:
-      - mongodbdata:/data/db
+  tasks:
+    - name: Pull mongo image
+      docker_container:
+        name: mongodb
+        image: mongo:4.2.13-bionic
+        state: started
+        restart: yes
+        restart_policy : on-failure
+        exposed_ports:
+          - "27017"
+        env: 
+          MONGO_INITDB_DATABASE: "flaskdb"
+          MONGODB_DATA_DIR: /data/db
+        volumes:
+          - mongodbdata:/data/db
 
 - name: Pull and run flask image
   hosts: all
