@@ -11,7 +11,7 @@ class ProductionConfig(object):
     SESSION_COOKIE_SECURE = False
 
     MONGODB_SETTINGS = {
-        'host': 'mongodb://' + os.environ['MONGODB_HOSTNAME'] + ':27017/' + os.environ['MONGODB_DATABASE'],
+        'host': 'mongodb://mongodb:27017/flaskdb',
         'connect': False,
     }
 
