@@ -14,11 +14,6 @@ export const Login = (props) => {
   
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [susername, setSignupUsername] = useState('')
-  const [spassword, setSignupPassword] = useState('')
-  const [name, setName] = useState('')
-  
-
   
 
   const [check, setCheck] = useState(false)
@@ -74,6 +69,7 @@ export const Login = (props) => {
             <input type="password" onChange={handlePasswordChange} class="form-control" placeholder="Password" required="required"></input>
           </div><br></br>
           <div class="form-group">
+          {message ? <Alert severity="error">{message}</Alert> : null}
             <button type="submit" class="btn btn-primary btn-block">Log in</button>
           </div>
           <div class="clearfix">

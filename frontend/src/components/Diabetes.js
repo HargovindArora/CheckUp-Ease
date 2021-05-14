@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link,useHistory } from 'react-router-dom'
 import '../index.css'
 import { Alert, AlertTitle } from '@material-ui/lab';
-import { Button, Modal } from 'react-bootstrap'
+import {DiabetesNav} from '../views/DiabetesNav'
 import axios from 'axios'
 
 export const Diabetes = () => {
@@ -81,31 +81,9 @@ export const Diabetes = () => {
                     </ul>
                 </div>
             </nav>
-            <div class="sidenav">
-                <ul>
-                    <li>Age in years</li>
-                    <li>Sex <br></br>
-                        1:Male <br></br>
-                        0:Female </li>
-                    <li> Chest Pain Type<br></br>
-                      Value 1: typical angina<br></br>
-                      Value 2: a typical angina<br></br>
-                      Value 3: non-anginal pain<br></br>
-                      Value 4: asymptomatic<br></br>
-                    </li>
-                    <li>Exercise angina <br></br>
-                        1:Yes <br></br>
-                        0:No
-                      </li>
-                    <li>Thal <br></br>
-                      3 = normal <br></br>
-                      6 = fixed defect <br></br>
-                      7 = reversable defect <br></br>
-                    </li>
-                </ul>
-            </div>
+            <DiabetesNav />
             <div class="content">
-                <h1 className="hm" class="p-3 mb-2 bg-info text-white">Diabetes Prediction</h1><br></br>
+            <h1 variant="secondary">Diabetes Prediction</h1><br></br>
                 <form onSubmit={handleShow}>
                 <label> Age:</label><br></br>
                 <input  type="value" onChange={(e) => {setAge(e.target.value)}}></input><br></br><br></br>
@@ -129,11 +107,11 @@ export const Diabetes = () => {
                 <input type="value" onChange={(e)=>{setAlopecia(e.target.value)}}></input><br></br><br></br>
                 <button type="submit" class="btn btn-success">Submit</button>
                </form><br></br>
-               <div className="Heart">{prediction == 1 ? <p>  <Alert severity="error">
+               <div className="Heart">{prediction == 1 ? <p>  <Alert severity="error" style={{fontSize:"20px"}}>
                     <AlertTitle>Get immediate checkup by doctor</AlertTitle>
                     <strong>Diabetes</strong>
                 </Alert></p> : null}</div>
-                <div className="Normal">{prediction == 0 ? <p>  <Alert severity="success">
+                <div className="Normal">{prediction == 0 ? <p>  <Alert severity="success" style={{fontSize:"20px"}}>
                     <AlertTitle>No need to worry</AlertTitle>
                     <strong>Normal</strong>
                 </Alert></p> : null}</div>

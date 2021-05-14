@@ -3,8 +3,36 @@ import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom'
 import Axios from 'axios'
 import { Alert, AlertTitle } from '@material-ui/lab';
+import { makeStyles } from '@material-ui/core/styles';
+import {Covidnav} from "../views/Covidnav"
+
+const drawerWidth = 240;
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+  },
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    width: drawerWidth,
+  },
+  drawerContainer: {
+    overflow: 'auto',
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+  },
+}));
 
 export const Covid = () => {
+    const classes=useStyles()
     const [image, setImage] = useState(0)
     const [prediction, setPrediction] = useState("")
 
@@ -72,13 +100,9 @@ export const Covid = () => {
                     </ul>
                 </div>
             </nav>
-            <div class="sidenav">
-                <ul>
-                    <li>Upload lung CT scan image or X ray image</li>
-                </ul>
-            </div>
+           <Covidnav />
             <div class="content">
-                <h1 className="hm" class="p-3 mb-2 bg-info text-white">Covid 19 Prediction</h1><br></br>
+            <h1 variant="secondary">Covid 19 Prediction</h1><br></br>
                 <form onSubmit={handleSubmit}>
                     <p>
                         <input type="file"
@@ -87,15 +111,15 @@ export const Covid = () => {
                     </p>
                     <button type="submit" class="btn btn-success">Submit</button>
                 </form><br></br>
-                <div className="Covid-19">{prediction === "Covid-19" ? <p>  <Alert severity="error">
+                <div className="Covid-19">{prediction === "Covid-19" ? <p>  <Alert severity="error" style={{fontSize:"20px"}}>
                     <AlertTitle>Get immediate checkup by doctor</AlertTitle>
                     <strong>Covid 19</strong>
                 </Alert></p> : null}</div>
-                <div className="Normal">{prediction === "Normal" ? <p>  <Alert severity="success">
+                <div className="Normal">{prediction === "Normal" ? <p>  <Alert severity="success" style={{fontSize:"20px"}}>
                     <AlertTitle>No need to worry</AlertTitle>
                     <strong>Normal</strong>
                 </Alert></p> : null}</div>
-                <div className="Pneumonia">{prediction === "Pneumonia" ? <p>  <Alert severity="info">
+                <div className="Pneumonia">{prediction === "Pneumonia" ? <p>  <Alert severity="info" style={{fontSize:"20px"}}>
                     <AlertTitle>Need to get an appointment with doctor early stage of Pneumonia</AlertTitle>
                     <strong>Pneumonia</strong>
                 </Alert></p> : null}</div>

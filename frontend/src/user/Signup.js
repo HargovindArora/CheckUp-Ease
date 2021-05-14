@@ -13,6 +13,7 @@ import Alert from '@material-ui/lab/Alert';
 import axios from 'axios';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import {useHistory} from 'react-router-dom'
 
 function BetterAlert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -45,6 +46,7 @@ export const Signup = (props)=> {
   const [password, setPassword] = React.useState("");
   const [message, setMessage] = React.useState(null);
   const [snackbar, setSnackbar] = React.useState(false);
+  const history=useHistory()
 
   const signUpHandler = () => {
     setMessage(null);
@@ -68,6 +70,7 @@ export const Signup = (props)=> {
   const handleCloseSnackBar = () => {
     setSnackbar(false);
     setTimeout(function () {
+        history.replace("/")
     }.bind(this, 2000))
   }
 

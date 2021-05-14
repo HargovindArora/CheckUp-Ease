@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { Link,useHistory } from 'react-router-dom'
 import '../index.css'
 import { Alert, AlertTitle } from '@material-ui/lab';
-import { Button, Modal } from 'react-bootstrap'
 import axios from 'axios'
-
+import Form from 'react-bootstrap/Form'
+import {HeartNav} from '../views/HeartNav'
 export const Heart = () => {
 
     const [age1, setAge] = useState("")
@@ -82,32 +82,10 @@ export const Heart = () => {
                     </ul>
                 </div>
             </nav>
-            <div class="sidenav">
-                <ul>
-                    <li>Age in years</li>
-                    <li>Sex <br></br>
-                        1:Male <br></br>
-                        0:Female </li>
-                    <li> Chest Pain Type<br></br>
-                      Value 1: typical angina<br></br>
-                      Value 2: a typical angina<br></br>
-                      Value 3: non-anginal pain<br></br>
-                      Value 4: asymptomatic<br></br>
-                    </li>
-                    <li>Exercise angina <br></br>
-                        1:Yes <br></br>
-                        0:No
-                      </li>
-                    <li>Thal <br></br>
-                      3 = normal <br></br>
-                      6 = fixed defect <br></br>
-                      7 = reversable defect <br></br>
-                    </li>
-                </ul>
-            </div>
+            <HeartNav />
             <div class="content">
-                <h1 className="hm" class="p-3 mb-2 bg-info text-white">Heart Disease Prediction</h1><br></br>
-                <form onSubmit={handleSho}>
+            <h1 variant="secondary">Heart Disease Prediction</h1><br></br>
+                <Form onSubmit={handleSho}>
                     <label> Age:</label><br></br>
                     <input type="value" onChange={(e) => { setAge(e.target.value) }}></input><br></br><br></br>
                     <label>Sex:  </label><br></br>
@@ -125,12 +103,12 @@ export const Heart = () => {
                     <label>Thal:  </label><br></br>
                     <input type="value" onChange={(e) => { setThal(e.target.value) }}></input><br></br><br></br>
                     <button type="submit" class="btn btn-success">Submit</button>
-                </form><br></br>
-                <div className="Heart">{prediction[0] == 1 ? <p>  <Alert severity="error">
+                </Form><br></br>
+                <div className="Heart">{prediction[0] == 1 ? <p>  <Alert severity="error" style={{fontSize:"20px"}}>
                     <AlertTitle>Get immediate checkup by doctor</AlertTitle>
                     <strong>Heart Disease</strong>
                 </Alert></p> : null}</div>
-                <div className="Normal">{prediction[0] == 0 ? <p>  <Alert severity="success">
+                <div className="Normal">{prediction[0] == 0 ? <p>  <Alert severity="success" style={{fontSize:"20px"}}>
                     <AlertTitle>No need to worry</AlertTitle>
                     <strong>Normal</strong>
                 </Alert></p> : null}</div>

@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import {
   BrowserRouter as Router,
-  Switch,
   Route,
-  Link
 } from "react-router-dom";
 
 
@@ -13,9 +11,7 @@ import {Covid} from './components/Covid'
 import {Login} from './user/Login'
 import {Signup} from './user/Signup'
 import {Dashboard} from './Dashboard'
-import {Profile} from './user/Profile'
 import  {Profiles} from './user/Profiles'
-
 class App extends Component {
 
   render() {
