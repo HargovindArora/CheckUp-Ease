@@ -20,17 +20,17 @@ pipeline {
         }
         stage('Build Docker Images') {
             steps {
-                sh 'docker build -f "api/Dockerfile" -t hargovind04/checkupEase_backend:latest .'
-                sh 'docker build -f "frontend/Dockerfile" -t hargovind04/checkupEase_frontend:latest .'
-                sh 'docker build -f "nginx/Dockerfile" -t hargovind04/checkupEase_nginx:latest .'
+                sh 'docker build -f "api/Dockerfile" -t hargovind04/checkup_ease_backend:latest .'
+                sh 'docker build -f "frontend/Dockerfile" -t hargovind04/checkup_ease_frontend:latest .'
+                sh 'docker build -f "nginx/Dockerfile" -t hargovind04/checkup_ease_nginx:latest .'
             }
         }
         stage('Publish Docker Images') {
             steps {
                 withDockerRegistry([ credentialsId: "DockerID", url: "" ]) {
-                    sh 'docker push hargovind04/checkupEase_backend:latest'
-                    sh 'docker push hargovind04/checkupEase_frontend:latest'
-                    sh 'docker push hargovind04/checkupEase_nginx:latest'
+                    sh 'docker push hargovind04/checkup_ease_backend:latest'
+                    sh 'docker push hargovind04/checkup_ease_frontend:latest'
+                    sh 'docker push hargovind04/checkup_ease_nginx:latest'
                 }
             }
         }

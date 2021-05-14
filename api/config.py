@@ -1,6 +1,3 @@
-import os
-
-
 class ProductionConfig(object):
 
     DEBUG = False
