@@ -11,13 +11,11 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'cd api/ && pip3 install -r requirements.txt'
-                sh 'cd frontend/ && npm install'
             }
         }
         stage('Test') {
             steps {
-                sh 'cd api/ && python3 -m pytest'
-                sh 'cd frontend/ && npm test'
+                sh 'cd api/ && export FLASK_ENV=development && python3 -m pytest'
             }
         }
         stage('Build Docker Images') {

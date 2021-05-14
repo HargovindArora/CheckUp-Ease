@@ -19,8 +19,8 @@ class Prediction(db.DynamicDocument):
 class User(db.Document):
 
     username = db.StringField(required=True, unique=True)
-    password = db.StringField(required=True, unique=True)
-    name = db.StringField(required=True, unique=True)
+    password = db.StringField(required=True)
+    name = db.StringField(required=True)
     predictions = db.ListField(db.ReferenceField('Prediction'))
     date_created = db.DateTimeField(default=datetime.utcnow)
 

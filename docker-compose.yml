@@ -2,32 +2,32 @@ version: "3.7"
 
 services:
   
-  mongodb:
-    image: mongo:4.2.13-bionic
-    container_name: mongodb
-    restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: password
-      MONGO_INITDB_DATABASE: flask_db
-      MONGODB_DATA_DIR: /data/db
-    volumes:
-      - mongodbdata:/data/db
-    networks:
-      - backend
-
   flask:
     build: ./api
     container_name: flask
     restart: always
     environment:
       - APP_NAME=app
+      - MONGODB_DATABASE=flaskdb
+      - MONGODB_HOSTNAME=mongodb
     expose:
       - 8080
     depends_on:
       - mongodb
     networks:
       - frontend
+      - backend
+
+  mongodb:
+    image: mongo:4.2.13-bionic
+    container_name: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: flask_db
+      MONGODB_DATA_DIR: /data/db
+    volumes:
+      - mongodbdata:/data/db
+    networks:
       - backend
 
   react:

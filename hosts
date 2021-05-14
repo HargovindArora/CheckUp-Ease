@@ -1,0 +1,2 @@
+[azuremachine]
+23.96.55.176 ansible_python_interpreter=auto

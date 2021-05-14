@@ -1,5 +1,7 @@
 import datetime
 
+from .. import logger
+
 from flask import request, Response, make_response, jsonify
 from flask_restful import Resource
 from flask_jwt_extended import create_access_token, get_jwt, jwt_required, get_jwt_identity
@@ -17,6 +19,8 @@ class SignupApi(Resource):
         user.save()
         id = user.id
 
+        logger.info(f"New user created with id {id}")
+
         res = make_response(jsonify({"msg": "User successfully created"}), 200)
 
         return res
@@ -31,10 +35,15 @@ class LoginApi(Resource):
         authorized = user.verify_password_hash(body.get('password'))
 
         if not authorized:
+            
+            logger.error(f"Incorrect username/password")
+
             return {"msg": "Username or password is invalid"}, 401
 
         expires = datetime.timedelta(days=1)
         access_token = create_access_token(identity=str(user.id), expires_delta=expires)
+
+        logger.info(f"User logged in")
 
         res = make_response(jsonify({"token": access_token}), 200)
 
@@ -49,6 +58,8 @@ class LogoutApi(Resource):
         jti = get_jwt()["jti"]
         revoked_token = TokenBlocklist(jti=jti)
         revoked_token.save()
+
+        logger.info(f"User logged out")
 
         res = make_response(jsonify({"msg": "Successfully logged out"}), 200)
 
@@ -66,6 +77,8 @@ class UserProfileApi(Resource):
         result = {}
         result['name'] = user.name
         result['predictions'] = user.predictions
+
+        logger.info(f"User accessing their profile information and previous predictions")
 
         res = make_response(jsonify({"profile": result}), 200)
 

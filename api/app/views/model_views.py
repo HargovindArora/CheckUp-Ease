@@ -2,6 +2,8 @@ import io
 import json
 import numpy as np
 
+from .. import logger
+
 from PIL import Image
 
 from flask import request, Response, make_response, jsonify
@@ -26,6 +28,8 @@ def transform_image(image_bytes):
         transforms.Normalize((0.5,), (0.5,))
     ])
     image = Image.open(io.BytesIO(image_bytes)).convert('RGB')
+
+    logger.info("Uploaded image transformed")
 
     return my_transforms(image).unsqueeze(0)
 
@@ -68,8 +72,11 @@ class HeartDiseasePrediction(Resource):
 
         if int(prediction[1]):
             pred = "True"
+            logger.info("Heart Disease Found")
         else:
             pred = "False"
+            logger.info("Heart Disease Not Found")
+
 
         model.prediction = pred
         model.save()
@@ -78,6 +85,8 @@ class HeartDiseasePrediction(Resource):
         user = User.objects.get(id=user_id)
         user.update(push__predictions=model)
         user.save()
+
+        logger.info("Heart disease prediction")
 
         res = make_response(jsonify({"Prediction": prediction}), 200)
 
@@ -100,8 +109,11 @@ class DiabetesPrediction(Resource):
 
         if int(prediction[1]):
             pred = "True"
+            logger.info("Diabetes Found")
         else:
             pred = "False"
+            logger.info("Diabetes Not Found")
+
 
         model.prediction = pred
         model.save()
@@ -110,6 +122,8 @@ class DiabetesPrediction(Resource):
         user = User.objects.get(id=user_id)
         user.update(push__predictions=model)
         user.save()
+
+        logger.info("Diabetes prediction")
 
         res = make_response(jsonify({"Prediction": prediction}), 200)
 
@@ -137,6 +151,8 @@ class CovidPrediction(Resource):
         user = User.objects.get(id=user_id)
         user.update(push__predictions=model)
         user.save()
+
+        logger.info("Covid-19 prediction")
 
         res = make_response(jsonify({"Prediction": prediction}), 200)
 
