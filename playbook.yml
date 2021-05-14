@@ -24,13 +24,13 @@
   tasks:
     - name: Pull flask image
       docker_image:
-        name: hargovind04/checkupEase_backend:latest
+        name: hargovind04/checkup_ease_backend:latest
         source: pull
 
     - name: Running flask image
       docker_container:
         name: flask
-        image: hargovind04/checkupEase_backend:latest
+        image: hargovind04/checkup_ease_backend:latest
         state: started
         restart: yes
         restart_policy : always
@@ -50,13 +50,13 @@
   tasks:
     - name: Pull react image
       docker_image:
-        name: hargovind04/checkupEase_frontend:latest
+        name: hargovind04/checkup_ease_frontend:latest
         source: pull
 
     - name: Running react image
       docker_container:
         name: react
-        image: hargovind04/checkupEase_frontend:latest
+        image: hargovind04/checkup_ease_frontend:latest
         state: started
         restart: yes
         restart_policy : always
@@ -71,13 +71,13 @@
   tasks:
     - name: Pull nginx image
       docker_image:
-        name: hargovind04/checkupEase_nginx:latest
+        name: hargovind04/checkup_ease_nginx:latest
         source: pull
 
     - name: Running nginx image
       docker_container:
         name: nginx
-        image: hargovind04/checkupEase_nginx:latest
+        image: hargovind04/checkup_ease_nginx:latest
         state: started
         restart: yes
         restart_policy : always
