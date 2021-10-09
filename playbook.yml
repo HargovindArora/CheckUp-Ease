@@ -1,5 +1,5 @@
 ---
-- name: Create db container
+- name: Create MongoDb Container
   hosts: all
   remote_user: azureuser
   tasks:
@@ -18,7 +18,7 @@
         volumes:
           - mongodbdata:/data/db
 
-- name: Pull and run flask image
+- name: Pull and Run Custom Flask image
   hosts: all
   remote_user: azureuser
   tasks:
@@ -44,7 +44,7 @@
         exposed_ports:
           - "8080"
 
-- name: Pull and run react image
+- name: Pull and Run Custom FLask Image
   hosts: all
   remote_user: azureuser
   tasks:
@@ -65,7 +65,7 @@
         exposed_ports:
           - "3000"        
 
-- name: Pull and run nginx image
+- name: Pull and Run Custom Nginx Image
   hosts: all
   remote_user: azureuser
   tasks:
